@@ -4,6 +4,8 @@ require('dotenv').config();
 const { API_KEY } = process.env;
 
 async function postValidation(req, res) {
+
+
     try {
 
         const response = await axios.post('https://api.validations.truora.com/v1/validations', {
@@ -20,7 +22,7 @@ async function postValidation(req, res) {
             });
 
         const responseData = response.data;
-        console.log('Acá viene la respuesta....', responseData, 'hasta acá');
+        // console.log('Acá viene la respuesta....', responseData, 'hasta acá');
         // console.log('Obtengo F URL', responseData.instructions.front_url);
         // console.log('Obtengo Validation ID', responseData.validation_id);
 

@@ -1,0 +1,21 @@
+
+
+select {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    align-content: center;
+    justify-content: center;
+    color: #fcebb6;
+    background-color: #5e412f;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  
+.centrar-select {
+    display: block;
+    margin: 10px auto;
+  }
+  
+ 
