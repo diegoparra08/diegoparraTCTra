@@ -15,9 +15,6 @@ const FileUploader = ({ front_url, reverse_url, setValidationStage, validationSt
     const isButtonDisabled = !selectedFileFront || !selectedFileBack;
 
 
-    console.log('valid id en 2ndo', validationId);
-    console.log(front_url);
-console.log(validationStage);
     const handleFileChangeFront = (event) => {
         const file = event.target.files[0];
         setSelectedFileFront(file);
@@ -36,11 +33,6 @@ console.log(validationStage);
             setImagePreviewBack(objectURL);
         }
     };
-
-    const handlePageChange = () => {
-        setShowResult(true)
-    }
-    console.log('file fr', selectedFileFront, 'file bk', selectedFileBack);
 
     const handleUpload = async () => {
         if (!selectedFileFront || !selectedFileBack) {
@@ -66,46 +58,54 @@ console.log(validationStage);
                 axios.put(endpointBack, dataToSendBack)
             ]);
 
-
+            setTimeout(() => {
+                setShowResult(true);
+            }, 120000);
             console.log('res front', responseFront);
             console.log('res back', responseBack);
 
-            // setValidationStage(2)
-            // return response
+
         } catch (error) {
             console.error('Error al subir el archivo:', error);
         }
     };
 
+    const handleValidation = () => {
+        setShowResult(!showResult)
+
+    }
 
 
     return (
         <div>
 
-            <div>
-                <h3>Por favor, carga una foto de tu documento por la parte frontal y luego la parte trasera. Por favor, asegúrate de que tu documento esté orientado horizontalmente.</h3>
-                <div className='select-picture'>
-                    <div>
-                        <h3>Parte Frontal</h3>
-                        <input type="file" onChange={handleFileChangeFront} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
-                        {imagePreviewFront === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
-                        {imagePreviewFront && <img src={imagePreviewFront} alt="Vista previa de la imagen" />}
-                    </div>
-                    <div>
-                        <h3>Parte Trasera</h3>
-                        <input type="file" onChange={handleFileChangeBack} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
-                        {imagePreviewBack === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
-                        {imagePreviewBack && <img src={imagePreviewBack} alt="Vista previa de la imagen" />}
+            {showResult === false &&
+
+                <div>
+                    <h3>Por favor, carga una foto de tu documento por la parte frontal y luego la parte trasera. Por favor, asegúrate de que tu documento esté orientado horizontalmente.</h3>
+                    <div className='select-picture'>
+                        <div>
+                            <h3>Parte Frontal</h3>
+                            <input type="file" onChange={handleFileChangeFront} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
+                            {imagePreviewFront === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
+                            {imagePreviewFront && <img src={imagePreviewFront} alt="Vista previa de la imagen" />}
+                        </div>
+                        <div>
+                            <h3>Parte Trasera</h3>
+                            <input type="file" onChange={handleFileChangeBack} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
+                            {imagePreviewBack === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
+                            {imagePreviewBack && <img src={imagePreviewBack} alt="Vista previa de la imagen" />}
+                        </div>
+
                     </div>
 
+                    <button onClick={() => {
+                        handleUpload();
+                        handleValidation();
+                    }}
+                        disabled={isButtonDisabled}>Subir Archivo</button>
                 </div>
-
-                <button onClick={() => {
-                    handleUpload();
-                    handlePageChange();
-                }}
-                    disabled={isButtonDisabled}>Subir Archivo</button>
-            </div>
+            }
 
             {showResult === true && (
                 <ValidationResult validationId={validationId} />

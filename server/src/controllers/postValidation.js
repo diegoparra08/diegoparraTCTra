@@ -22,9 +22,6 @@ async function postValidation(req, res) {
             });
 
         const responseData = response.data;
-        // console.log('Acá viene la respuesta....', responseData, 'hasta acá');
-        // console.log('Obtengo F URL', responseData.instructions.front_url);
-        // console.log('Obtengo Validation ID', responseData.validation_id);
 
         res.status(200).json(responseData);
     } catch (error) {

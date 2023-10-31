@@ -8,8 +8,7 @@ const { putDocumentFront, putDocumentBack } = require('../controllers/putDocumen
 const router = Router();
 
 router.post('/', postValidation);
-router.get('/', getValidationStatus);
-
+router.get('/:Id', getValidationStatus);
 router.put('/front', upload.single('file'), putDocumentFront);
 router.put('/back', upload.single('file'), putDocumentBack);
 

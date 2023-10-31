@@ -5,9 +5,13 @@ const { API_KEY } = process.env;
 
 async function getValidationStatus(req, res) {
 
-    const  { data }  = req.body;
+    const { Id }  = req.params;
+    if (!Id) {
+        console.log('no hay id');
+    }
+    console.log('id en controler', Id);
     try {
-        const response = await axios.get(`https://api.validations.truora.com/v1/validations/${data}`, {
+        const response = await axios.get(`https://api.validations.truora.com/v1/validations/${Id}`, {
             headers: {
                 'Truora-API-Key': API_KEY,
             },
