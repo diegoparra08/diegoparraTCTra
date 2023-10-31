@@ -4,7 +4,7 @@ const { Readable } = require('stream');
 require('dotenv').config();
 
 async function putDocumentFront(req, res) {
-  
+
   const { front_url } = req.body;
 
   try {
@@ -24,7 +24,7 @@ async function putDocumentFront(req, res) {
 
     if (response.ok) {
       const responseData = await response.json();
-      console.log('Aca va la respuestaaaa', responseData, 'aca termina');
+      console.log('Aca va la respuesta luego de cargar las imagenes', responseData);
       return response;
     } else {
       console.error('Error al cargar la imagen frontal del documento:', response.statusText);

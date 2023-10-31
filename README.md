@@ -24,6 +24,11 @@ Bienvenidos y ¡gracias por revisar este documento!
   <li>Subir la foto del documento por la parte frontal.</li>
   <li>Subir la foto del documento por la parte trasera.</li>
   <li>Hacer clic en el botón de subir archivo.</li>
+  <li>Esperar a recibir el resultado de la validación. (para ver las respuestas de la api, en la consola del serer se han dejado unos log intencionales)</li>
+
+
+<h1>Importante!</h1>
+<p>Sí se quiere intentar una otra validación y se usará una imagen que ya se habia cargado en una solicitud anterior, se debe ir a la carpeta llamada uploads en el folder del server y eliminar el archivo de esa imagen</p>
 
 
 
