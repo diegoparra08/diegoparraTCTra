@@ -1,58 +1,118 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import ValidationResult from './ValidationResult'
+
 import './FileUploader.css'
 
-function FileUploader({ front_ulr }) {
+const FileUploader = ({ front_url, reverse_url, setValidationStage, validationStage, validationId }) => {
 
-    console.log('a ver si pasa', front_ulr);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFileFront, setSelectedFileFront] = useState(null);
+    const [selectedFileBack, setSelectedFileBack] = useState(null);
+    const [imagePreviewFront, setImagePreviewFront] = useState(null);
+    const [imagePreviewBack, setImagePreviewBack] = useState(null);
+    const [showResult, setShowResult] = useState(false);
+    const isButtonDisabled = !selectedFileFront || !selectedFileBack;
 
-    const handleFileChange = (event) => {
+
+    console.log('valid id en 2ndo', validationId);
+    console.log(front_url);
+console.log(validationStage);
+    const handleFileChangeFront = (event) => {
         const file = event.target.files[0];
-        setSelectedFile(file);
+        setSelectedFileFront(file);
+
+        if (file) {
+            const objectURL = URL.createObjectURL(file);
+            setImagePreviewFront(objectURL);
+        }
     };
-    console.log('file', selectedFile);
+    const handleFileChangeBack = (event) => {
+        const file = event.target.files[0];
+        setSelectedFileBack(file);
 
+        if (file) {
+            const objectURL = URL.createObjectURL(file);
+            setImagePreviewBack(objectURL);
+        }
+    };
 
-    const handleUploadFront = async () => {
-        if (!selectedFile) {
+    const handlePageChange = () => {
+        setShowResult(true)
+    }
+    console.log('file fr', selectedFileFront, 'file bk', selectedFileBack);
+
+    const handleUpload = async () => {
+        if (!selectedFileFront || !selectedFileBack) {
             alert('Por favor, selecciona un archivo.');
             return;
         }
 
-        // const formData = new FormData();
-        // formData.append('file', selectedFile);
-
-
         try {
-            const endpoint = 'http://localhost:3000/validator/front';
+            const dataToSendFront = new FormData();
+            dataToSendFront.append('file', selectedFileFront);
+            dataToSendFront.append('front_url', front_url);
 
-            const dataToSend = new FormData();
-            dataToSend.append('file', selectedFile);
-            dataToSend.append('front_url', front_ulr);
-            console.log('este es el data to send', dataToSend);
+            const dataToSendBack = new FormData();
+            dataToSendBack.append('file', selectedFileBack);
+            dataToSendBack.append('reverse_url', reverse_url);
 
-            const response = await axios.put(endpoint, dataToSend,
-                //  {
-                // headers: {
-                //     'Content-Type': 'multipart/form-data',
-                // },
-          // }
-            );
-            alert('Archivo subido exitosamente.');
-            console.log(response);
+            const endpointFront = 'http://localhost:3000/validator/front';
+            const endpointBack = 'http://localhost:3000/validator/back';
+
+
+            const [responseFront, responseBack] = await Promise.all([
+                axios.put(endpointFront, dataToSendFront),
+                axios.put(endpointBack, dataToSendBack)
+            ]);
+
+
+            console.log('res front', responseFront);
+            console.log('res back', responseBack);
+
+            // setValidationStage(2)
+            // return response
         } catch (error) {
             console.error('Error al subir el archivo:', error);
         }
     };
 
+
+
     return (
         <div>
-            <input type="file" onChange={handleFileChange} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
-            <button onClick={handleUploadFront}>Subir Archivo</button>
+
+            <div>
+                <h3>Por favor, carga una foto de tu documento por la parte frontal y luego la parte trasera. Por favor, asegúrate de que tu documento esté orientado horizontalmente.</h3>
+                <div className='select-picture'>
+                    <div>
+                        <h3>Parte Frontal</h3>
+                        <input type="file" onChange={handleFileChangeFront} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
+                        {imagePreviewFront === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
+                        {imagePreviewFront && <img src={imagePreviewFront} alt="Vista previa de la imagen" />}
+                    </div>
+                    <div>
+                        <h3>Parte Trasera</h3>
+                        <input type="file" onChange={handleFileChangeBack} className='centrar-input' accept=".jpeg, .jpg, .png, image/jpeg, image/jpg, image/png" />
+                        {imagePreviewBack === null && <img src="https://i.pinimg.com/564x/a0/62/d1/a062d187495d69ad2014696bfa088d6a.jpg" alt="user icon" />}
+                        {imagePreviewBack && <img src={imagePreviewBack} alt="Vista previa de la imagen" />}
+                    </div>
+
+                </div>
+
+                <button onClick={() => {
+                    handleUpload();
+                    handlePageChange();
+                }}
+                    disabled={isButtonDisabled}>Subir Archivo</button>
+            </div>
+
+            {showResult === true && (
+                <ValidationResult validationId={validationId} />
+            )}
         </div>
     );
 }
 
 export default FileUploader;
+

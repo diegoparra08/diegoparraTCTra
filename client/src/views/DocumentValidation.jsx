@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 import FileUploader from '/src/components/FileUploader.jsx'
+
 import './Documents.css'
 
 const DocumentValidation = () => {
@@ -14,6 +15,8 @@ const DocumentValidation = () => {
     });
     const [validationStage, setValidationStage] = useState(0);
     const [front_url, setFront_url] = useState('');
+    const [reverse_url, setReverse_url] = useState('');
+    const [validationId, setValidationId] = useState('');
 
 
     console.log(data);
@@ -35,7 +38,10 @@ const DocumentValidation = () => {
 
             const response = await axios.post(endpoint, data);
             setFront_url(response.data.instructions.front_url)
+            setReverse_url(response.data.instructions.reverse_url)
+            setValidationId(response.data.validation_id)
             console.log(response.data);
+           
             setValidationStage(1)
 
         } catch (error) {
@@ -43,7 +49,6 @@ const DocumentValidation = () => {
         }
 
     };
-
 
 
     return (
@@ -87,8 +92,12 @@ const DocumentValidation = () => {
 
             {validationStage === 1 && (
                 <div>
-                    <p>Por favor, carga una foto de tu documento por la parte frontal. Por favor, asegúrate de que tu documento esté orientado horizontalmente.</p>
-                    <FileUploader front_ulr={front_url} />
+                    <FileUploader front_url={front_url} 
+                    reverse_url={reverse_url} 
+                    setValidationStage={setValidationStage} 
+                    validationStage={validationStage}
+                    validationId={validationId}
+                    />
                 </div>
             )}
 

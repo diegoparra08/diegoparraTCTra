@@ -1,17 +1,33 @@
-
 input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    align-content: center;
-    justify-content: center;
-    color: #fcebb6;
-    background-color: #5e412f;
-    border-radius: 5px;
-    padding: 5px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-content: center;
+  justify-content: center;
+  color: #fcebb6;
+  background-color: #5e412f;
+  border-radius: 5px;
+  padding: 5px;
+}
 
-  .centrar-input {
-    display: block;
-    margin: 10px auto;
-  }
+.centrar-input {
+  display: block;
+  margin: 10px auto;
+}
+
+img {
+  display: block;
+  margin: 10px auto;
+  width: 200px;
+  height: 200px;
+}
+
+.select-picture {
+  display: flex;
+  flex-direction: row;
+ justify-content: center;
+}
+
+.select-picture div {
+  margin: 0 80px;
+}
