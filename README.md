@@ -30,7 +30,7 @@ Bienvenidos y ¡gracias por revisar este documento!
 
 
 <h1>Importante!</h1>
-<p>Sí se quiere intentar una otra validación y se usará una imagen que ya se habia cargado en una solicitud anterior, se debe ir a la carpeta llamada uploads en el folder del server y eliminar el archivo de esa imagen</p>
+<p>Sí se quiere intentar una nueva validación y se usará una imagen que ya se habia cargado en una solicitud anterior, se debe ir a la carpeta llamada uploads en el folder del server y eliminar el archivo de esa imagen</p>
 
 
 
