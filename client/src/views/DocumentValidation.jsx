@@ -18,9 +18,6 @@ const DocumentValidation = () => {
     const [reverse_url, setReverse_url] = useState('');
     const [validationId, setValidationId] = useState('');
 
-
-    console.log(data);
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 

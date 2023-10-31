@@ -57,7 +57,7 @@ async function putDocumentBack(req, res) {
 
     if (response.ok) {
       const responseData = await response.json(); 
-      console.log('Aca va la respuestaaaa', responseData, 'aca termina');
+      console.log('Aca va la respuesta del reverse', responseData);
       return response;
     } else {
       console.error('Error al cargar la imagen frontal del documento:', response.statusText);

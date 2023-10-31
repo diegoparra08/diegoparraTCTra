@@ -4,20 +4,24 @@ import axios from "axios";
 
 const ValidationResult = ({ validationId }) => {
 
-    const [ result, setResult ] = useState('');
+    const [result, setResult] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [stillValidating, setStillValidating] = useState(false);
 
     useEffect(() => {
         if (validationId) {
             const timer = setTimeout(() => {
                 handleValidationCheck(validationId);
-            }, 120000); 
+            }, 120000);
 
             return () => clearTimeout(timer);
         }
-        
+
     }, [validationId]);
 
+    const handleVerificationButton = () => {
+        handleValidationCheck(validationId)
+    }
 
     const handleValidationCheck = async (Id) => {
 
@@ -27,6 +31,9 @@ const ValidationResult = ({ validationId }) => {
 
             const response = await axios.get(endpoint);
             if (response.status === 200 || response.status === 201) {
+                setResult(response.data.message)
+            } else if (response.status === 203) {
+                setStillValidating(true);
                 setResult(response.data.message)
             } else {
                 setResult('Se ha producido un error en la solicitud')
@@ -40,10 +47,20 @@ const ValidationResult = ({ validationId }) => {
 
     return (
         <div>
-           {isLoading ? (
+            {isLoading ? (
                 <h2>Estamos validando tu documento, puede tardar un par de minutos...</h2>
             ) : (
-                <h2>{result}</h2>
+                <div>
+                    {stillValidating ? (
+                        <div>
+                            <h2>{result}</h2>
+                            <button onClick={handleVerificationButton}>Verificar</button>
+                        </div>
+                    ) : (
+                        <h2>{result}</h2>
+                    )}
+
+                </div>
             )}
         </div>
     )

@@ -24,7 +24,9 @@ Bienvenidos y ¡gracias por revisar este documento!
   <li>Subir la foto del documento por la parte frontal.</li>
   <li>Subir la foto del documento por la parte trasera.</li>
   <li>Hacer clic en el botón de subir archivo.</li>
-  <li>Esperar a recibir el resultado de la validación. (para ver las respuestas de la api, en la consola del serer se han dejado unos log intencionales)</li>
+  <li>Esperar a recibir el resultado de la validación. (para ver las respuestas de la api, en la consola del server se han dejado unos logs intencionales)</li>
+  <li>Esperar a recibir el resultado de la validación. (para ver las respuestas de la API, en la consola del servidor se han dejado unos logs intencionales)</li>
+<li>*Para efectos del ejercicio, se ha ajustado la función que pide el estado de la validación con la petición GET para que se ejecute luego de dos minutos desde que el usuario carga las imágenes. Si luego de este tiempo, la petición aún tiene un "status = pending", se le informa al usuario y se le habilita un botón para volver a realizar la solicitud</li>
 
 
 <h1>Importante!</h1>
